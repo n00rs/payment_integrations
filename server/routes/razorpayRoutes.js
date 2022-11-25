@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
 const Razorpay = require("razorpay");
-
+const { createHmac } = require("crypto");
+// const { Db } = require("mongodb");
 const { RAZORPAY_KEY_ID, RAZORPAY_SECRET } = process.env;
 
 router.post("/orders", async (req, res, next) => {
@@ -23,4 +24,33 @@ router.post("/orders", async (req, res, next) => {
   }
 });
 
+router.post("/success", async (req, res, next) => {
+  try {
+    console.log(req.body);
+
+    const { orderId, razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
+
+    const hmac = createHmac("sha256", RAZORPAY_SECRET);
+
+    hmac.update(`${orderId}|${razorpayPaymentId}`);
+
+    const digest = hmac.digest("hex");
+
+    console.log(digest);
+
+    if (digest !== razorpaySignature) throw { message: "signature doesnt match" };
+
+    // db.orderCollecttion.updateOne({ _id:orderId  } {$set:{orderStatus:'payment received'}})    //update the ordrStatus
+    res.status(200).json({ message: "success", orderId, razorpayPaymentId });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
+
+
+
+
+// razorpayPaymentId: 'pay_KkKvoFqjm4nJIR',
+// razorpayOrderId: 'order_KkKv53jggPrGq3',
