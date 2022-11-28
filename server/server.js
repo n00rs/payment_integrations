@@ -1,4 +1,5 @@
 const express = require("express");
+const CurrencyConverter = require("./utils/currencyConverter");
 
 const app = express();
 
@@ -10,6 +11,15 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/razorpay", require("./routes/razorpayRoutes"));
 app.use("/api/paypal", require("./routes/paypalRoutes"));
+
+// app.get('/',async(req,res,next)=>{
+//   try {
+//     const a =await CurrencyConverter.convert(500)
+//     res.json(a)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 app.use((err, req, res, next) => {
   console.error(err);
