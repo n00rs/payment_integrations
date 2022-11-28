@@ -64,6 +64,7 @@ export const RazorpayBtn = () => {
             color: "#61dafb",
           },
         };
+        
         const paymentObj = new window.Razorpay(options);
         paymentObj.on("payment.failed", function (response) {
           console.log(response);
