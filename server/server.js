@@ -8,10 +8,16 @@ const { PORT } = process.env;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+// app.use(express.urlencoded({}))
 app.use("/api/razorpay", require("./routes/razorpayRoutes"));
 app.use("/api/paypal", require("./routes/paypalRoutes"));
 
+
+
+app.get('/api',(req,res)=>{
+  res.status(200).json({message:'hello'})
+  // res.send({message:'hello'})
+})
 // app.get('/',async(req,res,next)=>{
 //   try {
 //     const a =await CurrencyConverter.convert(500)

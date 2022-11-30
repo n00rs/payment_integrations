@@ -1,6 +1,5 @@
 const fetch = require("node-fetch");
 
-// set some important variables
 const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 
@@ -20,6 +19,7 @@ async function createOrder(amount) {
       intent: "CAPTURE",
       purchase_units: [
         {
+          reference_id: "unique-orderId-11e8-b467-0ed5f89f718b",
           amount: {
             currency_code: "USD",
             value: purchaseAmount,

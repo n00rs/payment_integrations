@@ -8,6 +8,7 @@ configure({
   client_id: process.env.PAYPAL_CLIENT_ID,
   client_secret: process.env.PAYPAL_SECRET,
 });
+
 const products = [
   { id: 1, name: "addidas", price: 200 },
   { id: 3, name: "nike", price: 400 },
@@ -36,7 +37,6 @@ router.post("/orders", async (req, res, next) => {
 
     const createOrder = await paypal.createOrder(total);
     res.status(200).json(createOrder);
-
   } catch (err) {
     next(err);
   }
@@ -46,7 +46,14 @@ router.post("/orders/:orderID/capture", async (req, res, next) => {
   const { orderID } = req.params;
   try {
     const captureData = await paypal.capturePayment(orderID);
+
+    // console.log(captureData);
+
     const transaction = captureData.purchase_units[0].payments.captures[0];
+    const orderId = captureData.purchase_units[0].reference_id;
+
+    // db.collection.updataOne({ _id:orderID },{ $set:{ paymentStatus:'received', paymentId:transaction.id }})                UPDATE DB PAYMENT STATUS AND ORDER ID
+
     console.log(transaction.status, transaction.id); //todo save the id in the db with order
     res.status(200).json(captureData);
   } catch (err) {
