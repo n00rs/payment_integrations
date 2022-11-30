@@ -1,7 +1,9 @@
 // import { useEffect } from "react";
 import "./App.css";
 import { Paypal } from "./components/Paypal";
+import { PaytmBtn } from "./components/PaytmBtn";
 import { RazorpayBtn } from "./components/Razorpay";
+import { StripeBtn } from "./components/StripeBtn";
 
 function App() {
   // useEffect(async () => {
@@ -20,6 +22,8 @@ function App() {
       <header className="App-header">
         <RazorpayBtn />
         <Paypal />
+        <StripeBtn />
+        <PaytmBtn />
       </header>
     </div>
   );

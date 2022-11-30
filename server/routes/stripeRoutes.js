@@ -10,7 +10,7 @@ const products = [
 
 router.post("/order", async (req, res, next) => {
   try {
-    const { prodId, quantity } = req.body();
+    const { prodId, quantity } = req.body;
 
     const product = products.find((prod) => prod.id === prodId);
 
@@ -21,8 +21,7 @@ router.post("/order", async (req, res, next) => {
       cancel_url: `${process.env.HOSTED_URL}/order/failed`,
       mode: `payment`,
       payment_method_types: [`card`],
-      client_reference_id: orderid,
-      customer: customer.id,
+      client_reference_id: "unique_orderId",
       line_items: [
         {
           price_data: {
@@ -36,14 +35,14 @@ router.post("/order", async (req, res, next) => {
         },
       ],
       payment_intent_data: {
-        receipt_email: address.email,
+        receipt_email: "address@c.email",
         metadata: {
           orderId: "unique_orderId",
         },
       },
     });
 
-    if (session.url) res.status(200).json(url);
+    if (session.url) res.status(200).json(session.url);
     else throw new Error("opps something went wrong ");
   } catch (err) {
     next(err);
