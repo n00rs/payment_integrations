@@ -23,14 +23,14 @@ router.post("/order", async (req, res, next) => {
       paytmParams["MID"] = process.env.PAYTM_MERCHANT_ID,
       paytmParams["WEBSITE"] = process.env.PAYTM_WEBSITE,
       paytmParams["ORDER_ID"] = new Date().getTime() + "paytm", //orderId for each payment request should be unique
-      paytmParams["CUST_ID"] = "unique customer Id",
-      paytmParams["TXN_AMOUNT"] = total,
-      paytmParams["CALLBACK_URL"] = `${process.env.SERVER_URL}/paytm/payment_status`, //callback url for fetching transcation url
+      paytmParams["CUST_ID"] = "unique_customer_Id"+Math.random(),
+      paytmParams["TXN_AMOUNT"] = total.toString(),
+      paytmParams["CALLBACK_URL"] = `${process.env.SERVER_URL}/api/paytm/payment_status`, //callback url for fetching transcation url
       paytmParams["EMAIL"] = "jon@email",
       paytmParams["MOBILE_NO"] = "+919633138136";
 
     console.log(paytmParams);
-    const checksum = PaytmCheckSum.generateSignature(paytmParams, process.env.PAYTM_MERCHANT_KEY); //creating checksum
+    const checksum = await PaytmCheckSum.generateSignature(paytmParams, process.env.PAYTM_MERCHANT_KEY); //creating checksum
 
     if (!checksum) throw new Error("error in paytm");
     console.log(checksum, "after generate");

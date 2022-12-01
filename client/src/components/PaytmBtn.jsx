@@ -43,3 +43,18 @@ function post(details) {
   form.submit();
   form.remove();
 }
+
+// function jobApplication({ rejection, giveChance }) {
+//   const experience = 0; // learning and done projects
+
+//   const passion = "80%";
+
+//   let skills = [Node.js, React.js, Mongo.db, postgreSQl, html, Bootstrap, Jquery, AJAX, etc...];
+
+//   if (giveChance) {
+//     console.log(`thanks, you wont regret && my exp : ${experience++} `);
+//     skills = [...skills, newSkills];
+//   } else rejection++;
+// }
+
+// if(error) console.log(`pseudo error `)

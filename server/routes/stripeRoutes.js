@@ -54,7 +54,7 @@ router.post("/webhooks", express.raw({ type: "application/json" }), async (req, 
   const payload = req.body;
   const payloadString = JSON.stringify(payload);
   const header = stripe.webhooks.generateTestHeaderString({
-    //<= got from google
+    //                                                                                                       <= got from google
     payload: payloadString,
     secret: process.env.SIGNIN_SECRET_KEY, //sign in key from stripe CLI
   });
