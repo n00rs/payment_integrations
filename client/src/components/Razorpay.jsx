@@ -37,7 +37,7 @@ export const RazorpayBtn = () => {
           description: "testing",
           order_id: orderId,
           handler: async (res) => {
-            console.log(res, "handler");
+            // console.log(res, "handler");
 
             const data = {
               orderId,
@@ -79,7 +79,7 @@ export const RazorpayBtn = () => {
         paymentObj.open();
       }
     } catch (err) {
-      console.error(err);
+      console.error(err,'razor err err');
     }
   };
 
