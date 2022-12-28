@@ -91,7 +91,6 @@ body {
 .btn-group {
   /* display: flex; */
   display: block;
-  cursor: pointer;
 }
 
 .btn-group .btn button {
@@ -100,6 +99,7 @@ body {
   background-color: #28a745;
   color: #fff;
   border-radius: 4px;
+  cursor: pointer;
   margin: 10px 0px 10px;
   font-weight: 600;
 }
