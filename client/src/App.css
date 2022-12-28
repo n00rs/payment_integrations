@@ -91,6 +91,7 @@ body {
 .btn-group {
   /* display: flex; */
   display: block;
+  cursor: pointer;
 }
 
 .btn-group .btn button {
