@@ -11,9 +11,9 @@ configure({
 
 const products = [
   { id: 1, name: "addidas", price: 200 },
-  { id: 3, name: "nike", price: 400 },
+  { id: 3, name: "nike", price: 500 },
   { id: 2, name: "tommy", price: 700 },
-  { id: 4, name: "rebook", price: 500 },
+  { id: 4, name: "rebook", price: 900 },
 ];
 
 router.get("/client-token", async (req, res, next) => {
@@ -33,7 +33,7 @@ router.post("/orders", async (req, res, next) => {
 
     const product = products.find((prod) => prod.id === prodId);
     let total = product.price * parseInt(quantity ? quantity : 1);
-    total = await convert(total);
+    total = await convert(total);           //converting to USD
 
     const createOrder = await paypal.createOrder(total);
     res.status(200).json(createOrder);

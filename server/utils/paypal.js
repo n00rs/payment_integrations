@@ -4,6 +4,7 @@ const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 
 // call the create order method
+
 async function createOrder(amount) {
   const purchaseAmount = amount.toFixed(2);
   const accessToken = await generateAccessToken();
@@ -48,8 +49,12 @@ async function capturePayment(orderId) {
 }
 
 // generate access token
+
 async function generateAccessToken() {
   const auth = Buffer.from(PAYPAL_CLIENT_ID + ":" + PAYPAL_SECRET).toString("base64");
+
+  console.log(auth);
+
   const response = await fetch(`${base}/v1/oauth2/token`, {
     method: "post",
     body: "grant_type=client_credentials",
@@ -57,11 +62,14 @@ async function generateAccessToken() {
       Authorization: `Basic ${auth}`,
     },
   });
+  console.log(response.headers.raw());
   const jsonData = await handleResponse(response);
+  // console.log(jsonData,'sccess');
   return jsonData.access_token;
 }
 
 // generate client token
+
 async function generateClientToken() {
   const accessToken = await generateAccessToken();
   const response = await fetch(`${base}/v1/identity/generate-token`, {
@@ -72,7 +80,7 @@ async function generateClientToken() {
       "Content-Type": "application/json",
     },
   });
-  console.log("response", response.status);
+  // console.log("response", response.status);
   const jsonData = await handleResponse(response);
   return jsonData.client_token;
 }
@@ -80,12 +88,11 @@ async function generateClientToken() {
 async function handleResponse(response) {
   if (response.status === 200 || response.status === 201) {
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   }
 
   const errorMessage = await response.text();
-  console.log(errorMessage);
   throw new Error(errorMessage);
 }
 

@@ -3,10 +3,11 @@ const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const products = [
   { id: 1, name: "addidas", price: 200 },
-  { id: 3, name: "nike", price: 400 },
+  { id: 3, name: "nike", price: 500 },
   { id: 2, name: "tommy", price: 700 },
-  { id: 4, name: "rebook", price: 500 },
+  { id: 4, name: "rebook", price: 900 },
 ];
+
 
 router.post("/order", async (req, res, next) => {
   try {

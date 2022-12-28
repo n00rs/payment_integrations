@@ -1,19 +1,28 @@
 const router = require("express").Router();
-
 const Razorpay = require("razorpay");
-
 const { createHmac } = require("crypto");
-
-// const { Db } = require("mongodb");
-
 const { RAZORPAY_KEY_ID, RAZORPAY_SECRET } = process.env;
 
+const products = [
+  { id: 1, name: "addidas", price: 200 },
+  { id: 3, name: "nike", price: 500 },
+  { id: 2, name: "tommy", price: 700 },
+  { id: 4, name: "rebook", price: 900 },
+];
+
 const instance = new Razorpay({ key_id: RAZORPAY_KEY_ID, key_secret: RAZORPAY_SECRET });
+
 router.post("/orders", async (req, res, next) => {
   try {
+    const { prodId, quantity } = req.body;
+
+    const product = products.find((prod) => prod.id === prodId);
+
+    let total = product.price * parseInt(quantity ? quantity : 1);
+
     const receipt = `reciept_no ${Math.random().toFixed(6).slice(-6)}`,
       options = {
-        amount: 500 * 100,
+        amount: total * 100,
         currency: "INR",
         receipt,
       },
@@ -53,7 +62,8 @@ router.post("/success", async (req, res, next) => {
 
 router.get("/payment-details/:paymentId", async (req, res, next) => {
   const { paymentId } = req.params;
-  const paymentData = await instance.payments.all();
+  // const paymentData = await instance.payments.all(); /// to fetch all details
+  const paymentData = await instance.payments.fetch(paymentId);
   res.status(200).json(paymentData);
 });
 

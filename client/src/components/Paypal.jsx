@@ -22,7 +22,7 @@ export const Paypal = () => {
 
   const createOrder = async () => {
     try {
-      const body = { prodId: 4, quantity: 1 };
+      const body = { prodId: 3, quantity: 1 };
       const res = await fetch("/api/paypal/orders", {
         method: "POST",
         body: JSON.stringify(body),

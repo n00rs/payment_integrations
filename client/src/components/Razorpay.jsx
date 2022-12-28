@@ -18,7 +18,12 @@ export const RazorpayBtn = () => {
     try {
       const script = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
       if (script) {
-        const res = await fetch("/api/razorpay/orders", { method: "POST" });
+        const res = await fetch("/api/razorpay/orders", {
+          method: "POST",
+          body: JSON.stringify({ prodId: 3, quantity: 1 }),
+          headers: { "Content-Type": "application/json" },
+        });
+        
         const resData = await res.json();
         if (!res.ok) throw resData;
         console.log(resData);
@@ -64,7 +69,7 @@ export const RazorpayBtn = () => {
             color: "#61dafb",
           },
         };
-        
+
         const paymentObj = new window.Razorpay(options);
         paymentObj.on("payment.failed", function (response) {
           console.log(response);
@@ -78,5 +83,5 @@ export const RazorpayBtn = () => {
     }
   };
 
-  return <button onClick={popupRazor}>Razorpay &#8377; 500</button>;
+  return <button onClick={popupRazor}>Razorpay</button>;
 };

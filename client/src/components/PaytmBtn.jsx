@@ -5,7 +5,7 @@ export const PaytmBtn = () => {
     try {
       const res = await fetch("/api/paytm/order", {
         method: "POST",
-        body: JSON.stringify({ prodId: 4, quantity: 1 }),
+        body: JSON.stringify({ prodId: 3, quantity: 1 }),
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
