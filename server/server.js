@@ -1,14 +1,13 @@
 const express = require("express");
 const CurrencyConverter = require("./utils/currencyConverter");
 const app = express();
+const path = require("path");
 const env = require("dotenv").config();
 const { PORT } = process.env;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../client/build")));
-
-
 
 app.use("/api/razorpay", require("./routes/razorpayRoutes"));
 app.use("/api/paypal", require("./routes/paypalRoutes"));
